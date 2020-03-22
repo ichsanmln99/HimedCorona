@@ -20,6 +20,9 @@
         .bg-danger{background-color: #f96e7c!important;}
         .bg-success{background-color: #4cce4a!important;}
         .text-disabled{color:#929292}
+        #legend .card-body{display: flex; justify-content: center;}
+        #legend-list{display: inline-flex!important;}
+        #legend-list li {margin-right: 50px;}
 
         @media (min-width: 1200px){
             .container {
@@ -147,13 +150,13 @@
         <!-- Map -->
 
         <!-- Map Legend -->
-        <!-- <div id="legend">
+        <div id="legend">
             <div class="card mb-5">
                 <div class="card-body">
-                    <ul><li></li></ul>
+                    <ul id="legend-list" class="my-4"></ul>
                 </div>
             </div>
-        </div> -->
+        </div>
         <!-- Map Legend -->
 
         </div>
@@ -255,13 +258,16 @@
             color: color,
             radius: 5,
         }).addTo(map).bindTooltip(
-            "Status : "+el.status+" <br>Usia : "+el.usia+" <br>Desa : "+el.desa+"<br>Kecamatan : "+el.kecamatan+"<br>Kota/Kabupaten : "+el.kabupaten+"<br>Keterangan :  "+el.keterangan+"<br>"
+            "Status : <span class='text-capitalize'>"+el.status+"</span> <br>Usia : "+el.usia+" <br>Desa : "+el.desa+"<br>Kecamatan : "+el.kecamatan+"<br>Kota/Kabupaten : "+el.kabupaten+"<br>Keterangan :  "+el.keterangan+"<br>"
             ,{direction:'bottom',offset: L.point({x: 0, y: 15})});
     });
 
-    // marker.forEach(el => {
-        
-    // });
+    var legendlist = "";
+    Object.keys(marker).forEach((key,el) => {
+        legendlist += "<li class='text-capitalize' style='color:"+marker[key].color+"'>"+key+"</li>";
+    });
+    
+    document.getElementById('legend-list').innerHTML = legendlist;
 
     </script>
 </body>
