@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>HIMED</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+    integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+    crossorigin=""/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:400,600,700&display=swap" rel="stylesheet">
+
+    <style>
+        body{font-family: 'Poppins';}
+        #map {height:400px;}
+        #mapbox { height: 100%; }
+        .card{margin-top:30px;box-shadow: 3px 4px 4px 0px #ececec;}
+        .card-header{font-size: 20px;}
+        .bg-danger{background-color: #f96e7c!important;}
+        .bg-success{background-color: #4cce4a!important;}
+        .text-disabled{color:#929292}
+
+        @media (min-width: 1200px){
+            .container {
+                max-width: 1240px;
+            }
+        }
+
+    </style>
+
+</head>
+<body class="bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light bg-white">
+        <div class="container">
+            <a class="navbar-brand" href="#">HIMED</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+              <div class="navbar-nav">
+                <a class="nav-item nav-link active" href="#">Home <span class="sr-only">(current)</span></a>
+                <a class="nav-item nav-link" href="#">About</a>
+              </div>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+
+        <div class="row">
+            <div class="col-12 col-lg-3">
+                <div class="card bg-danger text-white">
+                    <div class="card-body">
+                        <h5 class="card-title">Positif</h5>
+                        <p class="card-text">
+                            <h3><b>403</b> Orang</h3>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-3">
+                <div class="card bg-success text-white">
+                    <div class="card-body">
+                        <h5 class="card-title">Sembuh</h5>
+                        <p class="card-text">
+                            <h3><b>403</b> Orang</h3>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-3">
+                <div class="card bg-dark text-white">
+                    <div class="card-body">
+                        <h5 class="card-title">Meninggal</h5>
+                        <p class="card-text">
+                            <h3><b>403</b> Orang</h3>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Ratio Meninggal</h5>
+                        <p class="card-text">
+                            <h3><b>6.6</b> %</h3>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-md-6">
+                <div class="card bg-white">
+                    <div class="card-header">
+                        ODP (Orang Dalam Pemantauan)
+                      </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12 col-lg-4">
+                                <h3><b>403</b></h3>
+                                <p class="text-disabled">Proses Pemantauan</p>
+                            </div>
+                            <div class="col-12 col-lg-4">
+                                <h4><b>403</b></h4>
+                                <p class="text-disabled">Selesai Pemantauan</p>
+                            </div>
+                            <div class="col-12 col-lg-4">
+                                <h4><b>403</b></h4>
+                                <p class="text-disabled">Total ODP</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="card bg-white">
+                    <div class="card-header">
+                        PDP (Pasien Dalam Pengawasan)
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12 col-lg-4">
+                                <h3><b>403</b></h3>
+                                <p class="text-disabled">Proses Pengawasan</p>
+                            </div>
+                            <div class="col-12 col-lg-4">
+                                <h4><b>403</b></h4>
+                                <p class="text-disabled">Selesai Pengawasan</p>
+                            </div>
+                            <div class="col-12 col-lg-4">
+                                <h4><b>403</b></h4>
+                                <p class="text-disabled">Total PDP</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Map -->
+        <div id="map" class="card">
+            <div class="card-body p-0">
+                    <div id="mapbox"></div>
+            </div>
+        </div>
+        <!-- Map -->
+
+        <!-- Map Legend -->
+        <!-- <div id="legend">
+            <div class="card mb-5">
+                <div class="card-body">
+                    <ul><li></li></ul>
+                </div>
+            </div>
+        </div> -->
+        <!-- Map Legend -->
+
+        </div>
+
+        <nav class="navbar navbar-expand-lg navbar-light bg-white m-0">
+            <div class="container p-4 text-disabled">
+                <small>Made with Love by Himed</small>
+            </div>
+        </nav>
+
+
+    </div>
+
+    <!-- Bootstrap -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <!-- Make sure you put this AFTER Leaflet's CSS -->
+    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+    integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+    crossorigin=""></script>
+
+    <script>
+    var map = L.map('mapbox').setView([-6.8218,107.1395], 10);
+    
+    var marker = {
+        positif :{ color: "#BE000B"},
+        ODP :{ color: "#36B478"},
+        PDP :{ color: "#36B4AA"},
+        meninggal :{ color: "#484848"},
+        sembuh :{ color: "#3B49AC"},
+    }
+
+    var data = [
+        {   
+            koordinat: [-6.8118,107.1395],
+            status: "ODP",
+            usia: "20 tahun",
+            desa: "Cihaur",
+            kecamatan: "Cibeber",
+            kabupaten: "Cianjur",
+            keterangan: "Terpapar dari hewan",
+        },
+        {
+            koordinat: [-6.8278,107.1500],
+            status: "PDP",
+            usia: "30 tahun",
+            desa: "Ciranjang",
+            kecamatan: "Ciranjang",
+            kabupaten: "Cianjur",
+            keterangan: "Terpapar dari WNA",
+        },
+        {
+            koordinat: [-6.8254,107.1200],
+            status: "positif",
+            usia: "11",
+            desa: "Cikondang",
+            kecamatan: "Cikondang",
+            kabupaten: "Cianjur",
+            keterangan: "",
+        },
+        {
+            koordinat: [-6.8400,107.1100],
+            status: "positif",
+            usia: "50 tahun",
+            desa: "Cimacan",
+            kecamatan: "Cipanas",
+            kabupaten: "Cianjur",
+            keterangan: "",
+        },
+        {
+            koordinat: [-6.9400,107.1500],
+            status: "sembuh",
+            usia: "50 tahun",
+            desa: "Cimacan",
+            kecamatan: "Cipanas",
+            kabupaten: "Cianjur",
+            keterangan: "",
+        }
+    ];
+
+    L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+    minZoom: 9,
+    maxZoom: 13,
+    id: 'mapbox/streets-v11',
+    tileSize: 512,
+    zoomOffset: -1,
+    preferCanvas: true,
+    accessToken: 'pk.eyJ1IjoiaWNoc2FubWF1bGFuYSIsImEiOiJjazgyaW1oMHYxMWx6M2RvNDliczltbHBrIn0.-mWn69uhO5UyQKA1yowWlg'
+    }).addTo(map);
+
+
+    data.forEach(el => {
+        let color = marker[el.status].color;
+
+        L.circleMarker(el.koordinat, {
+            color: color,
+            radius: 5,
+        }).addTo(map).bindTooltip(
+            "Status : "+el.status+" <br>Usia : "+el.usia+" <br>Desa : "+el.desa+"<br>Kecamatan : "+el.kecamatan+"<br>Kota/Kabupaten : "+el.kabupaten+"<br>Keterangan :  "+el.keterangan+"<br>"
+            ,{direction:'bottom',offset: L.point({x: 0, y: 15})});
+    });
+
+    // marker.forEach(el => {
+        
+    // });
+
+    </script>
+</body>
+</html>
